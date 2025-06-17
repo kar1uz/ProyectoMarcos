@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/html.html to edit this template
+-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+        <title>TecnoNet - Mensajes</title>
+        <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+    </head>
+    <body>
+
+        <header class="bg-dark text-white py-3">
+            <nav class="navbar navbar-expand-lg navbar-dark">
+                <div class="container">
+                    <a class="navbar-brand" th:href="@{/}"><img src="assets/img/logo.png" height="30"/>TecnoNet</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item"><a class="nav-link" th:href="@{'/#planes'}">Planes</a></li>
+                            <li class="nav-item"><a class="nav-link" th:href="@{'/#beneficios'}">Beneficios</a></li>
+                            <li class="nav-item"><a class="nav-link" th:href="@{'/#servicios'}">Servicios</a></li>
+                            <li class="nav-item"><a class="nav-link" th:href="@{/contactanos}">Contáctanos</a></li>
+                            <li class="nav-item"><a class="nav-link" th:href="@{/iniciarSesion}">Iniciar Sesión</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <div class="container mt-5">
+            <h2 class="mb-4 text-center">Mensajes Recibidos</h2>
+
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Email</th>
+                            <th>Teléfono</th>
+                            <th>Asunto</th>
+                            <th>Mensaje</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="c : ${contactos}">
+                            <td th:text="${c.nombre}">Nombre</td>
+                            <td th:text="${c.apellido}">Apellido</td>
+                            <td th:text="${c.email}">Email</td>
+                            <td th:text="${c.numero}">Teléfono</td>
+                            <td th:text="${c.asunto}">Asunto</td>
+                            <td th:text="${c.mensaje}">Mensaje</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="text-center mt-4">
+                <a th:href="@{/contactanos}" class="btn btn-primary">Volver</a>
+            </div>
+        </div>
+
+        <footer class="bg-dark text-white py-3 mt-4 text-center">
+            <div class="container">
+                <div class="row mt-3 mb-3"> <div class="col-12 col-sm-6 col-md-3 mb-3 mb-md-0"> <div class="seccion-info">
+                            <h2>Contacto</h2>
+                            <label>Dirección</label>
+                            <p>Av. Republica de Panama</p>
+                            <p>Nro. 3418 - 3420</p>
+                            <p>Torre Barlovento - San Isidro</p>
+                            <label>Central</label>
+                            <p>01-800-6521</p>
+                            <p>+51 960244483</p>
+                            <label>Correo Electronico</label>
+                            <a href="mailto:tecnonet711@gmail.com" target="_blank" class="gmail text-decoration-none">
+                                <p>tecnonet711@gmail.com</p>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-3 mb-3 mb-md-0"> <div class="seccion-info">
+                            <h2>Sobre Nosotros</h2>
+                            <p>
+                                TecnoNet es una empresa dedicada a ofrecer servicios de internet de alta velocidad, asegurando una conexión
+                                confiable y estable para hogares y negocios. Con cobertura amplia y planes accesibles, busca mejorar la
+                                experiencia digital de sus usuarios. La innovación y el servicio al cliente son sus principales pilares.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-3 mb-3 mb-md-0"> <div class="seccion-info">
+                            <h2>Nuestras redes sociales</h2>
+                            <a href="https://www.facebook.com/profile.php?id=61567300440247&mibextid=ZbWKwL" target="_blank"
+                               class="gmail text-decoration-none d-flex align-items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 48 48"
+                                     style="margin-right: 8px;">
+                                <path fill="#3F51B5" d="M42,37c0,2.762-2.238,5-5,5H11c-2.761,0-5-2.238-5-5V11c0-2.762,2.239-5,5-5h26c2.762,0,5,2.238,5,5V37z">
+                                </path>
+                                <path fill="#FFF"
+                                      d="M34.368,25H31v13h-5V25h-3v-4h3v-2.41c0.002-3.508,1.459-5.59,5.592-5.59H35v4h-2.287C31.104,17,31,17.6,31,18.723V21h4L34.368,25z">
+                                </path>
+                                </svg>
+                                <p class="mb-0"> TecnoNet </p> </a>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-3">
+                        <div class="frm-consulta-express">
+                            <form onsubmit="sugerencia(); return false;">
+                                <h2>Valóranos</h2>
+                                <div class="form-group">
+                                    <label class="prom">Bríndanos tu valoración</label>
+                                    <button type="submit" class="btn btn-md btn-primary w-100">Valorar</button>
+                                    <p id="resultado" class="mt-2 text-success fw-bold"></p>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="derechos py-2"> <p class="mb-0">&copy; 2024 TECNONET | TODOS LOS DERECHOS RESERVADOS</p> </div>
+        </footer>
+
+        <script src="code.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDxyJxEd7v4AuFUYOub+31z7g==" crossorigin="anonymous"></script>
+    </body>
+</html>

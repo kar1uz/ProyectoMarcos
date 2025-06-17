@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <title>TecnoNet - Inicio</title>
+        <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+        <link rel="stylesheet" href="grosor.css">
+    </head>
+    <body>
+        <header class="bg-dark text-white py-3">
+            <nav class="navbar navbar-expand-lg navbar-dark">
+                <div class="container">
+                    <a class="navbar-brand" th:href="@{/}"><img src="assets/img/logo.png" height="30"/>TecnoNet</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item"><a class="nav-link" th:href="@{'/#planes'}">Planes</a></li>
+                            <li class="nav-item"><a class="nav-link" th:href="@{'/#beneficios'}">Beneficios</a></li>
+                            <li class="nav-item"><a class="nav-link" th:href="@{'/#servicios'}">Servicios</a></li>
+                            <li class="nav-item"><a class="nav-link" th:href="@{/contactanos}">Contáctanos</a></li>
+                            <li class="nav-item"><a class="nav-link" th:href="@{/iniciarSesion}">Iniciar Sesión</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <section id="planes" class="seccion-inicio mt-10">
+            <div class="container mt-4">
+                <div class="row justify-content-center text-center mb-3">
+                    <div class="col-md-8">
+                        <h1>Nuestros Planes Hogar de Internet</h1>
+                        <p class="lead">Descubre nuestras opciones de internet rápido y confiable, diseñadas para ajustarse a tus necesidades y presupuesto. Elige el plan perfecto para mantenerte siempre conectado.</p>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <div class="bg-light border rounded shadow p-3">
+                            <div class="row row-cols-1 row-cols-md-3 gx-0">
+                                <div class="col p-3 text-center">
+                                    <div class="border rounded p-3">
+                                        <h5 class="fw-bold text-primary">50 Mbps</h5>
+                                        <h3>Plan Home Eco</h3>
+                                        <ul class="list-unstyled text-start">
+                                            <li><i class="fas fa-download text-info me-2"></i> Descarga: 50 Mbps</li>
+                                            <li><i class="fas fa-upload text-info me-2"></i> Carga: 25 Mbps</li>
+                                            <li><i class="fas fa-wifi text-info me-2"></i> Wifi: 1</li>
+                                            <li><i class="far fa-calendar-check text-info me-2"></i> Mes gratis: No</li>
+                                            <li><i class="fas fa-ethernet text-info me-2"></i> Puertos: 1000</li>
+                                        </ul>
+                                        <p class="fs-4 fw-bold text-success">S/ 55 x mes</p>
+                                        <button class="btn btn-primary" onclick="mensajePlan1()">Contratar Plan</button>
+                                    </div>
+                                </div>
+                                <div class="col p-3 text-center">
+                                    <div class="border rounded p-3">
+                                        <h5 class="fw-bold text-primary">100 Mbps</h5>
+                                        <h3>Plan Home Lite</h3>
+                                        <ul class="list-unstyled text-start">
+                                            <li><i class="fas fa-download text-info me-2"></i> Descarga: 100 Mbps</li>
+                                            <li><i class="fas fa-upload text-info me-2"></i> Carga: 50 Mbps</li>
+                                            <li><i class="fas fa-wifi text-info me-2"></i> Wifi: 1</li>
+                                            <li><i class="far fa-calendar-check text-info me-2"></i> Mes gratis: No</li>
+                                            <li><i class="fas fa-ethernet text-info me-2"></i> Puertos: 1000</li>
+                                        </ul>
+                                        <p class="fs-4 fw-bold text-success">S/ 110 x mes</p>
+                                        <button class="btn btn-primary" onclick="mensajePlan2()">Contratar Plan</button>
+                                    </div>
+                                </div>
+                                <div class="col p-3 text-center">
+                                    <div class="border rounded p-3">
+                                        <h5 class="fw-bold text-primary">200 Mbps</h5>
+                                        <h3>Plan Home Prime</h3>
+                                        <ul class="list-unstyled text-start">
+                                            <li><i class="fas fa-download text-info me-2"></i> Descarga: 200 Mbps</li>
+                                            <li><i class="fas fa-upload text-info me-2"></i> Carga: 95 Mbps</li>
+                                            <li><i class="fas fa-wifi text-info me-2"></i> Wifi: 1</li>
+                                            <li><i class="far fa-calendar-check text-info me-2"></i> Mes gratis: Sí</li>
+                                            <li><i class="fas fa-ethernet text-info me-2"></i> Puertos: 1000</li>
+                                        </ul>
+                                        <p class="fs-4 fw-bold text-success">S/ 210 x mes</p>
+                                        <button class="btn btn-primary" onclick="mensajePlan3()">Contratar Plan</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="beneficios" class="seccion-inicio mt-10">
+            <div class="container mt-5">
+                <h2 class="text-center mb-4">Beneficios de Elegir Tecnonet</h2>
+                <p class="lead text-center mb-5">Con Tecnonet, disfruta de conexión estable, soporte técnico personalizado las 24 horas y planes que se adaptan a ti. Vive una experiencia de internet sin interrupciones y con la mejor calidad del mercado.</p>
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                    <div class="col">
+                        <div class="card h-100 border rounded shadow p-3 text-center">
+                            <div class="d-flex justify-content-center align-items-center mb-3">
+                                <div class="rounded-circle bg-primary text-white d-flex justify-content-center align-items-center" style="width: 60px; height: 60px;">
+                                    <i class="fas fa-wifi fa-2x"></i>
+                                </div>
+                            </div>
+                            <h5 class="card-title fw-bold">Internet de Alta Velocidad</h5>
+                            <p class="card-text text-muted">Navega, descarga y juega sin interrupciones con nuestras rápidas velocidades de Internet.</p>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 border rounded shadow p-3 text-center">
+                            <div class="d-flex justify-content-center align-items-center mb-3">
+                                <div class="rounded-circle bg-success text-white d-flex justify-content-center align-items-center" style="width: 60px; height: 60px;">
+                                    <i class="fas fa-users fa-2x"></i>
+                                </div>
+                            </div>
+                            <h5 class="card-title fw-bold">Multiuso</h5>
+                            <p class="card-text text-muted">Disfruta de una conexión inalámbrica a distintos dispositivos de vuestro hogar.</p>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 border rounded shadow p-3 text-center">
+                            <div class="d-flex justify-content-center align-items-center mb-3">
+                                <div class="rounded-circle bg-warning text-white d-flex justify-content-center align-items-center" style="width: 60px; height: 60px;">
+                                    <i class="fas fa-piggy-bank fa-2x"></i>
+                                </div>
+                            </div>
+                            <h5 class="card-title fw-bold">Ahorro y Comodidad</h5>
+                            <p class="card-text text-muted">Combina tus servicios y ahorra dinero mientras disfrutas de la conveniencia de tener todo en un solo paquete.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="servicios" class="seccion-inicio mt-10">
+            <div class="container mt-5">
+                <h2 class="text-center mb-4">Nuestros Servicios</h2>
+                <p class="lead text-center mb-5">En Tecnonet ofrecemos una variedad de servicios para mejorar tu experiencia de conexión: instalación rápida, mantenimiento técnico especializado y atención al cliente dedicada. Todo lo que necesitas para disfrutar de un servicio de internet de calidad.</p>
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="card border rounded shadow p-4">
+                            <div class="row align-items-center">
+                                <div class="col-md-6">
+                                    <h5 class="card-title fw-bold mb-3">Descubre Más en Nuestro Video</h5>
+                                    <p class="card-text text-muted">Mira nuestro video para conocer más sobre cómo Tecnonet puede mejorar tu conexión a internet y los servicios que ofrecemos.</p>
+                                </div>
+                                <div class="col-md-6 text-center">
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#servicioVideoModal">
+                                        <i class="fas fa-play-circle fa-5x text-primary"></i>
+                                        <p class="mt-2 text-muted">Ver Video</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="servicioVideoModal" tabindex="-1" aria-labelledby="servicioVideoModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="servicioVideoModalLabel">Video de Nuestros Servicios</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <div class="ratio ratio-16x9">
+                                    <video src="assets/videos/servicio_internet.mp4" class="embed-responsive-item" controls></video>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="bg-dark text-white py-3 mt-4 text-center">
+            <div class="container">
+                <div class="row mt-3 mb-3"> <div class="col-12 col-sm-6 col-md-3 mb-3 mb-md-0"> <div class="seccion-info">
+                            <h2>Contacto</h2>
+                            <label>Dirección</label>
+                            <p>Av. Republica de Panama</p>
+                            <p>Nro. 3418 - 3420</p>
+                            <p>Torre Barlovento - San Isidro</p>
+                            <label>Central</label>
+                            <p>01-800-6521</p>
+                            <p>+51 960244483</p>
+                            <label>Correo Electronico</label>
+                            <a href="mailto:tecnonet711@gmail.com" target="_blank" class="gmail text-decoration-none">
+                                <p>tecnonet711@gmail.com</p>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-3 mb-3 mb-md-0"> <div class="seccion-info">
+                            <h2>Sobre Nosotros</h2>
+                            <p>
+                                TecnoNet es una empresa dedicada a ofrecer servicios de internet de alta velocidad, asegurando una conexión
+                                confiable y estable para hogares y negocios. Con cobertura amplia y planes accesibles, busca mejorar la
+                                experiencia digital de sus usuarios. La innovación y el servicio al cliente son sus principales pilares.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-3 mb-3 mb-md-0"> <div class="seccion-info">
+                            <h2>Nuestras redes sociales</h2>
+                            <a href="https://www.facebook.com/profile.php?id=61567300440247&mibextid=ZbWKwL" target="_blank"
+                               class="gmail text-decoration-none d-flex align-items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 48 48"
+                                     style="margin-right: 8px;">
+                                <path fill="#3F51B5" d="M42,37c0,2.762-2.238,5-5,5H11c-2.761,0-5-2.238-5-5V11c0-2.762,2.239-5,5-5h26c2.762,0,5,2.238,5,5V37z">
+                                </path>
+                                <path fill="#FFF"
+                                      d="M34.368,25H31v13h-5V25h-3v-4h3v-2.41c0.002-3.508,1.459-5.59,5.592-5.59H35v4h-2.287C31.104,17,31,17.6,31,18.723V21h4L34.368,25z">
+                                </path>
+                                </svg>
+                                <p class="mb-0"> TecnoNet </p> </a>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-3">
+                        <div class="frm-consulta-express">
+                            <form onsubmit="sugerencia(); return false;">
+                                <h2>Valóranos</h2>
+                                <div class="form-group">
+                                    <label class="prom">Bríndanos tu valoración</label>
+                                    <button type="submit" class="btn btn-md btn-primary w-100">Valorar</button>
+                                    <p id="resultado" class="mt-2 text-success fw-bold"></p>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="derechos py-2"> <p class="mb-0">&copy; 2024 TECNONET | TODOS LOS DERECHOS RESERVADOS</p> </div>
+        </footer>
+
+        <script src="code.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDxyJxEd7v4AuFUYOub+31z7g==" crossorigin="anonymous"></script>
+    </body>
+</html>
