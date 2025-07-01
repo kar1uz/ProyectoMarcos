@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>TecnoNet - Gestión de Contratos</title>
+    <link rel="stylesheet" href="grosor.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .content-wrapper {
+            flex: 1;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        .table-responsive {
+            margin-top: 20px;
+        }
+
+        .table thead th {
+            background-color: #343a40;
+            color: white;
+            vertical-align: middle;
+        }
+
+        .table tbody td {
+            vertical-align: middle;
+        }
+
+        .badge-activo {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .badge-pendiente_instalacion {
+            background-color: #ffc107;
+            color: black;
+        }
+
+        .badge-cancelado {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .badge-finalizado {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .badge-suspendido {
+            background-color: #17a2b8;
+            color: white;
+        }
+
+        .modal-body .row {
+            margin-bottom: 10px;
+        }
+
+        .modal-body .label-bold {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="bg-dark text-white py-3">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <a class="navbar-brand" th:href="@{/indexAdmin}"><img src="assets/img/logo.png"
+                        height="30" />TecnoNet</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" th:href="@{'/serviciosAdmin'}">Servicios</a></li>
+                        <li class="nav-item"><a class="nav-link" th:href="@{'/usuarios'}">Usuarios</a></li>
+                        <li class="nav-item"><a class="nav-link" th:href="@{/mensajes}">Mensajes</a></li>
+                        <li class="nav-item"><a class="nav-link" th:href="@{/contratos}">Contratos</a></li>
+
+                        <li class="nav-item" sec:authorize="!isAuthenticated()">
+                            <a class="nav-link" th:href="@{/iniciarSesion}">Iniciar Sesión</a>
+                        </li>
+
+                        <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#"
+                                id="navbarDropdownAdmin" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="/assets/img/admin-profile.png" alt="Perfil" class="profile-pic me-2">
+                                <span th:if="${usuarioLogueado}"
+                                    th:text="${usuarioLogueado.nombre} + ' ' + ${usuarioLogueado.apellido}"></span>
+                                <span sec:authentication="name" th:unless="${usuarioLogueado}"></span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownAdmin">
+                                <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
+                                        data-bs-target="#logoutModal">Cerrar Sesión</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="content-wrapper container mt-4">
+        <h2 class="mb-4">Gestión de Contratos</h2>
+
+        <div th:if="${mensaje}" class="alert alert-success alert-dismissible fade show" role="alert">
+            <span th:text="${mensaje}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <span th:text="${error}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID Contrato</th>
+                        <th>Cliente</th>
+                        <th>Plan</th>
+                        <th>Fecha Contratación</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="contrato : ${contratos}">
+                        <td th:text="${contrato.idContrato}"></td>
+                        <td th:text="${contrato.usuario.nombre + ' ' + contrato.usuario.apellido}"></td>
+                        <td th:text="${contrato.plan.nombrePlan}"></td>
+                        <td th:text="${#temporals.format(contrato.fechaContratacion, 'dd-MM-yyyy HH:mm')}"></td>
+                        <td>
+                            <span
+                                th:classappend="'badge badge-' + ${#strings.toLowerCase(contrato.estadoContrato.name())}"
+                                th:text="${contrato.estadoContrato}"></span>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#detallesContratoModal" th:data-id="${contrato.idContrato}"
+                                th:data-cliente-nombre="${contrato.usuario.nombre + ' ' + contrato.usuario.apellido}"
+                                th:data-cliente-email="${contrato.usuario.email}"
+                                th:data-plan-nombre="${contrato.plan.nombrePlan}"
+                                th:data-plan-precio="${#numbers.formatDecimal(contrato.plan.precioMensual, 0, 'COMMA', 2, 'POINT')}"
+                                th:data-plan-velocidad-descarga="${contrato.plan.velocidadDescargaMbps}"
+                                th:data-plan-velocidad-carga="${contrato.plan.velocidadCargaMbps}"
+                                th:data-fecha-contratacion="${#temporals.format(contrato.fechaContratacion, 'dd-MM-yyyy HH:mm')}"
+                                th:data-fecha-inicio-servicio="${#temporals.format(contrato.fechaInicioServicio, 'dd-MM-yyyy')}"
+                                th:data-fecha-fin-contrato="${#temporals.format(contrato.fechaFinContrato, 'dd-MM-yyyy')}"
+                                th:data-estado="${contrato.estadoContrato}"
+                                th:data-direccion="${contrato.direccionInstalacion}"
+                                th:data-telefono="${contrato.numeroTelefonoContacto}"
+                                th:data-metodo-pago="${contrato.metodoPago}"
+                                th:data-costo-instalacion="${#numbers.formatDecimal(contrato.costoInstalacion, 0, 'COMMA', 2, 'POINT')}"
+                                th:data-observaciones="${contrato.observaciones}">
+                                Ver Detalles
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="modal fade" id="detallesContratoModal" tabindex="-1" aria-labelledby="detallesContratoModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="detallesContratoModalLabel">Detalles del Contrato</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6"><span class="label-bold">ID Contrato:</span> <span id="modal-id"></span>
+                        </div>
+                        <div class="col-md-6"><span class="label-bold">Estado:</span> <span id="modal-estado"></span>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-12"><span class="label-bold">Cliente:</span> <span
+                                id="modal-cliente-nombre"></span></div>
+                        <div class="col-md-12"><span class="label-bold">Email Cliente:</span> <span
+                                id="modal-cliente-email"></span></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12"><span class="label-bold">Teléfono Contacto:</span> <span
+                                id="modal-telefono"></span></div>
+                        <div class="col-md-12"><span class="label-bold">Dirección Instalación:</span> <span
+                                id="modal-direccion"></span></div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-12"><span class="label-bold">Plan:</span> <span
+                                id="modal-plan-nombre"></span></div>
+                        <div class="col-md-6"><span class="label-bold">Precio Mensual Plan:</span> S/ <span
+                                id="modal-plan-precio"></span></div>
+                        <div class="col-md-6"><span class="label-bold">Velocidad Descarga:</span> <span
+                                id="modal-plan-velocidad-descarga"></span> Mbps</div>
+                        <div class="col-md-6"><span class="label-bold">Velocidad Carga:</span> <span
+                                id="modal-plan-velocidad-carga"></span> Mbps</div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6"><span class="label-bold">Fecha Contratación:</span> <span
+                                id="modal-fecha-contratacion"></span></div>
+                        <div class="col-md-6"><span class="label-bold">Inicio Servicio:</span> <span
+                                id="modal-fecha-inicio-servicio"></span></div>
+                        <div class="col-md-6"><span class="label-bold">Fin Contrato:</span> <span
+                                id="modal-fecha-fin-contrato"></span></div>
+                        <div class="col-md-6"><span class="label-bold">Costo Instalación:</span> S/ <span
+                                id="modal-costo-instalacion"></span></div>
+                        <div class="col-md-12"><span class="label-bold">Método Pago:</span> <span
+                                id="modal-metodo-pago"></span></div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-12"><span class="label-bold">Observaciones:</span> <span
+                                id="modal-observaciones"></span></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <footer class="bg-dark text-white py-3 mt-4 text-center">
+        <div class="container">
+            <div class="row mt-3 mb-3">
+                <div class="col-12 col-sm-6 col-md-3 mb-3 mb-md-0">
+                    <div class="seccion-info">
+                        <h2>Contacto</h2>
+                        <label>Dirección</label>
+                        <p>Av. Republica de Panama</p>
+                        <p>Nro. 3418 - 3420</p>
+                        <p>Torre Barlovento - San Isidro</p>
+                        <label>Central</label>
+                        <p>01-800-6521</p>
+                        <p>+51 960244483</p>
+                        <label>Correo Electronico</label>
+                        <a href="mailto:tecnonet711@gmail.com" target="_blank" class="gmail text-decoration-none">
+                            <p>tecnonet711@gmail.com</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-3 mb-3 mb-md-0">
+                    <div class="seccion-info">
+                        <h2>Sobre Nosotros</h2>
+                        <p>
+                            TecnoNet es una empresa dedicada a ofrecer servicios de internet de alta velocidad,
+                            asegurando una conexión
+                            confiable y estable para hogares y negocios. Con cobertura amplia y planes accesibles, busca
+                            mejorar la
+                            experiencia digital de sus usuarios. La innovación y el servicio al cliente son sus
+                            principales pilares.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-3 mb-3 mb-md-0">
+                    <div class="seccion-info">
+                        <h2>Nuestras redes sociales</h2>
+                        <a href="https://www.facebook.com/profile.php?id=61567300440247&mibextid=ZbWKwL" target="_blank"
+                            class="gmail text-decoration-none d-flex align-items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 48 48"
+                                style="margin-right: 8px;">
+                                <path fill="#3F51B5"
+                                    d="M42,37c0,2.762-2.238,5-5,5H11c-2.761,0-5-2.238-5-5V11c0-2.762,2.239-5,5-5h26c2.762,0,5,2.238,5,5V37z">
+                                </path>
+                                <path fill="#FFF"
+                                    d="M34.368,25H31v13h-5V25h-3v-4h3v-2.41c0.002-3.508,1.459-5.59,5.592-5.59H35v4h-2.287C31.104,17,31,17.6,31,18.723V21h4L34.368,25z">
+                                </path>
+                            </svg>
+                            <p class="mb-0"> TecnoNet </p>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="frm-consulta-express">
+                        <form onsubmit="sugerencia(); return false;">
+                            <h2>Valóranos</h2>
+                            <div class="form-group">
+                                <label class="prom">Bríndanos tu valoración</label>
+                                <button type="submit" class="btn btn-md btn-primary w-100">Valorar</button>
+                                <p id="resultado" class="mt-2 text-success fw-bold"></p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="derechos py-2">
+            <p class="mb-0">&copy; 2024 TECNONET | TODOS LOS DERECHOS RESERVADOS</p>
+        </div>
+    </footer>
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="logoutModalLabel">Confirmar Cerrar Sesión</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Estás seguro de que quieres cerrar tu sesión?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <form th:action="@{/logout}" method="post">
+                        <button type="submit" class="btn btn-danger">Cerrar Sesión</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+        crossorigin="anonymous"></script>
+    <script src="code.js"></script>
+    <script>
+        function sugerencia() {
+            document.getElementById('resultado').innerText = '¡Gracias por tu valoración!';
+        }
+
+        var detallesContratoModal = document.getElementById('detallesContratoModal');
+        if (detallesContratoModal) {
+            detallesContratoModal.addEventListener('show.bs.modal', function (event) {
+                var button = event.relatedTarget;
+
+                document.getElementById('modal-id').textContent = button.getAttribute('data-id');
+                document.getElementById('modal-cliente-nombre').textContent = button.getAttribute('data-cliente-nombre');
+                document.getElementById('modal-cliente-email').textContent = button.getAttribute('data-cliente-email');
+                document.getElementById('modal-plan-nombre').textContent = button.getAttribute('data-plan-nombre');
+                document.getElementById('modal-plan-precio').textContent = button.getAttribute('data-plan-precio');
+                document.getElementById('modal-plan-velocidad-descarga').textContent = button.getAttribute('data-plan-velocidad-descarga');
+                document.getElementById('modal-plan-velocidad-carga').textContent = button.getAttribute('data-plan-velocidad-carga');
+                document.getElementById('modal-fecha-contratacion').textContent = button.getAttribute('data-fecha-contratacion');
+                document.getElementById('modal-fecha-inicio-servicio').textContent = button.getAttribute('data-fecha-inicio-servicio');
+                document.getElementById('modal-fecha-fin-contrato').textContent = button.getAttribute('data-fecha-fin-contrato');
+                document.getElementById('modal-estado').textContent = button.getAttribute('data-estado');
+                document.getElementById('modal-direccion').textContent = button.getAttribute('data-direccion');
+                document.getElementById('modal-telefono').textContent = button.getAttribute('data-telefono');
+                document.getElementById('modal-metodo-pago').textContent = button.getAttribute('data-metodo-pago');
+                document.getElementById('modal-costo-instalacion').textContent = button.getAttribute('data-costo-instalacion');
+                document.getElementById('modal-observaciones').textContent = button.getAttribute('data-observaciones');
+
+                var estadoSpan = document.getElementById('modal-estado');
+                estadoSpan.className = '';
+                estadoSpan.classList.add('badge');
+                estadoSpan.classList.add('badge-' + button.getAttribute('data-estado').toLowerCase());
+            });
+        }
+    </script>
+</body>
+
+</html>

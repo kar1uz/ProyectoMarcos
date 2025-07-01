@@ -1,71 +1,58 @@
 package com.example.demo.modelo;
 
-public class contacto {
+import jakarta.persistence.*;
+import lombok.Data;
+import java.time.LocalDateTime;
 
-    private String nombre;
-    private String apellido;
-    private String email;
-    private String numero;
+@Data
+@Entity
+@Table(name = "CONTACTOS")
+public class Contacto {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_contacto")
+    private Integer idContacto;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+
+    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
+    private Usuario usuario;
+
+    @Column(name = "nombre_remitente", nullable = false, length = 100)
+    private String nombreRemitente;
+
+    @Column(name = "apellido_remitente", length = 100)
+    private String apellidoRemitente;
+
+    @Column(name = "email_remitente", nullable = false, length = 255)
+    private String emailRemitente;
+
+    @Column(name = "telefono_remitente", length = 20)
+    private String telefonoRemitente;
+
+    @Column(name = "asunto", nullable = false, length = 255)
     private String asunto;
+
+    @Column(name = "mensaje", nullable = false, columnDefinition = "TEXT")
     private String mensaje;
 
-    public contacto() {
+    @Enumerated(EnumType.STRING)
+    @Column(name = "asesor_genero", nullable = false)
+    private AsesorGenero asesorGenero;
+
+    @Column(name = "fecha_envio", nullable = false, updatable = false)
+    private LocalDateTime fechaEnvio;
+
+    @PrePersist
+    protected void onCreate() {
+        this.fechaEnvio = LocalDateTime.now();
     }
 
-    public contacto(String nombre, String apellido, String email, String numero, String asunto, String mensaje) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.email = email;
-        this.numero = numero;
-        this.asunto = asunto;
-        this.mensaje = mensaje;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getNumero() {
-        return numero;
-    }
-
-    public String getAsunto() {
-        return asunto;
-    }
-
-    public String getMensaje() {
-        return mensaje;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
-
-    public void setAsunto(String asunto) {
-        this.asunto = asunto;
-    }
-
-    public void setMensaje(String mensaje) {
-        this.mensaje = mensaje;
+    public enum AsesorGenero {
+        MASCULINO,
+        FEMENINO,
+        OTRO
     }
 }

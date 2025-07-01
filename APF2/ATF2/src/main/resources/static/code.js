@@ -3,19 +3,23 @@ const {createApp} = Vue;
 createApp({
     data() {
         return {
-            asesor: "Hombre",
+            asesorDisplay: "Hombre",
+            asesorValue: "MASCULINO",
         };
     },
     computed: {
         imagenAsesor() {
-            return this.asesor === "Mujer"
-                    ? "assets/img/woman.png"
-                    : "assets/img/soporte.png";
+            if (this.asesorValue === "FEMENINO") {
+                return "assets/img/woman.png";
+            } else {
+                return "assets/img/soporte.png";
+            }
         },
     },
     methods: {
-        seleccionar(opcion) {
-            this.asesor = opcion;
+        seleccionarAsesor(value, display) {
+            this.asesorValue = value;
+            this.asesorDisplay = display;
         },
     },
 }).mount("#app");
@@ -67,14 +71,9 @@ function sugerencia() {
     }
 }
 
-function mensajePlan1() {
-    alert("Haz seleccionado el Plan Home Eco");
-}
 
-function mensajePlan2() {
-    alert("Haz seleccionado el Plan Home Lite");
-}
-
-function mensajePlan3() {
-    alert("Haz seleccionado el Plan Home Prime");
+function mensajePlan(nombreDelPlan) {
+    alert("Has seleccionado el " + nombreDelPlan + ". ¡Pronto nos pondremos en contacto contigo!");
+    // Aquí puedes añadir más lógica, como redirigir a una página de contratación
+    // o abrir un modal con un formulario de contacto específico para ese plan.
 }
