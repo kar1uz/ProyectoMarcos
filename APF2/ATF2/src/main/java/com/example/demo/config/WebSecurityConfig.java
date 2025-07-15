@@ -36,12 +36,12 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/", "/iniciarSesion**", "/h2-console/**", "/registrate**", "/contactanos**",
-                                "/assets/**", "/css/**", "/js/**", "/img/**", "/error")
-                        .permitAll()
-                        .requestMatchers("/indexAdmin").hasRole("ADMIN")
-                        .anyRequest().authenticated())
+            .authorizeHttpRequests(authorize -> authorize
+                .requestMatchers("/", "/iniciarSesion**", "/h2-console/**", "/registrate**", "/contactanos**",
+                    "/assets/**", "/css/**", "/js/**", "/img/**", "/error", "/api/**") // <- Añadir "/api/**"
+                .permitAll()
+                .requestMatchers("/indexAdmin").hasRole("ADMIN")
+                .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/iniciarSesion")
                         .loginProcessingUrl("/iniciarSesion")

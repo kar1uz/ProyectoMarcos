@@ -1,10 +1,24 @@
 package com.example.demo.modelo;
 
-import jakarta.persistence.*;
-import lombok.Data;
-import java.math.BigDecimal;
+import java.math.BigDecimal; 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
+import lombok.Data;
 
 @Data
 @Entity
@@ -16,10 +30,12 @@ public class Contrato {
     @Column(name = "id_contrato")
     private Integer idContrato;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario", nullable = false, referencedColumnName = "id_usuario")
     private Usuario usuario;
 
+    @JsonIgnore 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_plan", nullable = false, referencedColumnName = "id_plan")
     private Plan plan;

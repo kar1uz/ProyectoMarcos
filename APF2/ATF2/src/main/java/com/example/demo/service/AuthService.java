@@ -1,15 +1,16 @@
 package com.example.demo.service;
 
-import com.example.demo.modelo.Usuario;
-import com.example.demo.modelo.Administrador;
-import com.example.demo.dto.RegistroRequest;
-import com.example.demo.repository.UsuarioRepository;
-import com.example.demo.repository.AdministradorRepository;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import com.example.demo.dto.RegistroRequest;
+import com.example.demo.modelo.Administrador;
+import com.example.demo.modelo.Usuario;
+import com.example.demo.repository.AdministradorRepository;
+import com.example.demo.repository.UsuarioRepository;
 
 @Service
 public class AuthService {
