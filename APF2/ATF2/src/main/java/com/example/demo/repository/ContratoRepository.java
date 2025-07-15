@@ -7,9 +7,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.modelo.Contrato;
+import com.example.demo.modelo.Contrato.EstadoContrato;
 
 @Repository
 public interface ContratoRepository extends JpaRepository<Contrato, Integer> {
     @Query("SELECT c FROM Contrato c JOIN FETCH c.usuario u JOIN FETCH c.plan p ORDER BY c.idContrato ASC")
     List<Contrato> findAllWithUsuarioAndPlan();
+
+    long countByPlanIdPlanAndEstadoContrato(Integer idPlan, EstadoContrato estadoContrato);
+
 }

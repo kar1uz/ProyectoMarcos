@@ -425,3 +425,7 @@ The connection was not closed by the application and is garbage collected [90018
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:690)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
 	... 16 more
+2025-07-15 00:10:42.614367-05:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "SELECT * FROM CONTRATOS WHERE ID_PLAN = [*][ID_DEL_PLAN_QUE_INTENTAS_ELIMINAR]"; se esperaba "ALL (, ANY (, SOME ("
+Syntax error in SQL statement "SELECT * FROM CONTRATOS WHERE ID_PLAN = [*][ID_DEL_PLAN_QUE_INTENTAS_ELIMINAR]"; expected "ALL (, ANY (, SOME ("; SQL statement:
+SELECT * FROM CONTRATOS WHERE ID_PLAN = [ID_DEL_PLAN_QUE_INTENTAS_ELIMINAR] [42001-232]

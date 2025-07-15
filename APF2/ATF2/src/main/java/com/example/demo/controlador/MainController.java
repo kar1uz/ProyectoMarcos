@@ -55,7 +55,7 @@ public class MainController {
 
     @Autowired
     private ContratoRepository contratoRepository;
-    
+
     @Autowired
     private AdministradorRepository administradorRepository;
 
@@ -66,10 +66,11 @@ public class MainController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication != null && authentication.isAuthenticated() &&
-            !(authentication.getPrincipal() instanceof String && authentication.getPrincipal().equals("anonymousUser"))) {
+                !(authentication.getPrincipal() instanceof String
+                        && authentication.getPrincipal().equals("anonymousUser"))) {
 
             if (authentication.getPrincipal() instanceof UserDetails userDetails) {
-                String email = userDetails.getUsername(); 
+                String email = userDetails.getUsername();
 
                 Optional<Usuario> usuarioOptional = usuarioRepository.findByEmail(email);
                 if (usuarioOptional.isPresent()) {
@@ -82,14 +83,13 @@ public class MainController {
                     Usuario usuarioParaHeader = new Usuario();
                     usuarioParaHeader.setNombre(admin.getNombre());
                     usuarioParaHeader.setApellido(admin.getApellido());
-                    usuarioParaHeader.setEmail(admin.getEmail()); 
+                    usuarioParaHeader.setEmail(admin.getEmail());
                     return usuarioParaHeader;
                 }
             }
         }
-        return null; 
+        return null;
     }
-
 
     @GetMapping("/")
     public String rootRedirect() {
@@ -334,6 +334,26 @@ public class MainController {
 
     @PostMapping("/serviciosAdmin/eliminar")
     public String eliminarPlan(@RequestParam("id") Integer idPlan, RedirectAttributes redirectAttributes) {
+        Optional<Plan> planOptional = planRepository.findById(idPlan);
+        if (!planOptional.isPresent()) {
+            redirectAttributes.addFlashAttribute("error", "El plan no existe.");
+            return "redirect:/serviciosAdmin";
+        }
+
+        long contratosActivos = contratoRepository.countByPlanIdPlanAndEstadoContrato(idPlan,
+                Contrato.EstadoContrato.ACTIVO);
+        long contratosPendientes = contratoRepository.countByPlanIdPlanAndEstadoContrato(idPlan,
+                Contrato.EstadoContrato.PENDIENTE_INSTALACION);
+
+        long contratosQueImpidenEliminacion = contratosActivos + contratosPendientes;
+
+        if (contratosQueImpidenEliminacion > 0) {
+            redirectAttributes.addFlashAttribute("error",
+                    "No se puede eliminar este plan porque tiene " + contratosQueImpidenEliminacion
+                            + " contratos asociados que impiden su eliminación (activos o pendientes de instalación).");
+            return "redirect:/serviciosAdmin";
+        }
+
         try {
             planRepository.deleteById(idPlan);
             redirectAttributes.addFlashAttribute("mensaje", "Plan eliminado exitosamente!");
