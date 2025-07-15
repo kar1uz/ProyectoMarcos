@@ -143,6 +143,11 @@ public class MainController {
         return "indexAdmin";
     }
 
+    @GetMapping("/planes")
+    public String planes() {
+        return "planes";
+    }
+
     @GetMapping("/contactanos")
     public String mostrarFormularioContacto(Model model) {
         ContactoForm contactoForm;

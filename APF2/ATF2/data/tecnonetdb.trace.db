@@ -1,0 +1,9 @@
+2025-07-15 06:46:49.089899-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "ADMINISTRADORES" not found (this database is empty); SQL statement:
+INSERT INTO administradores (email, password_hash, nombre, apellido, fecha_creacion, activo) VALUES ('admin@tecnonet.com','$2a$10$qyvczj9c2sTqPZRBdTkr1uuhZkqPMBN4ZAQYQJhBJJxI/R/gN/GYu','Patrick Estefano','Del Aguila Rodriguez','2025-06-16 23:30:08',1) [42104-232]
+2025-07-15 06:46:49.110071-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "PLANES" not found (this database is empty); SQL statement:
+INSERT INTO planes (nombre_plan, velocidad_descarga_mbps, velocidad_carga_mbps, wifi_incluido, mes_gratis_promocion, puertos_ethernet, precio_mensual, descripcion, fecha_creacion, activo) VALUES ('Plan Home Eco',50,25,1,0,1000,55.00,'Ideal para uso básico del hogar, navegación y redes sociales.','2025-06-17 16:55:49',1), ('Plan Home Lite',100,50,1,0,1000,110.00,'Perfecto para hogares con streaming moderado y trabajo remoto ligero.','2025-06-17 16:56:41',1), ('Plan Home Prime',200,95,1,1,1000,210.00,'Diseñado para usuarios exigentes, gaming, streaming 4K y múltiples dispositivos.','2025-06-17 16:57:21',1) [42104-232]
+2025-07-15 06:46:49.112151-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USUARIOS" not found (this database is empty); SQL statement:
+INSERT INTO usuarios (nombre, apellido, email, password_hash, fecha_registro, activo, tipo_usuario) VALUES ('Carlos Hernesto','Casas Torres','CarlosCasas@gmail.com','$2a$10$ETpxthB5ljNzR9vCWjBl9exlECB3UD6nVzQxCFuHcoS2bxRQTGEmi','2025-06-17 04:35:58',1,'USUARIO'), ('Miguel Angel','Tenorio Mesa','migueltenorio25@gmail.com','$2a$10$dZU86tRfIg51oS2nRvoLHuBBwr85cy.FswdvEpai9QB1XIn05Jnwm','2025-06-17 06:41:14',1,'USUARIO'), ('Camila Valentina','Mendez Sosa','camivalen74@gmail.com','$2a$10$pDWHohmRsMLdRM1YI0CY8OvZMzX5eQtfL.7WygTiNph4iKTI7dPje','2025-06-17 06:56:02',1,'USUARIO') [42104-232]
